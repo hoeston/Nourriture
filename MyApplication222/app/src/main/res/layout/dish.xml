@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/id_dish01_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:weightSum="1"
+        android:background="@mipmap/dish_bg">
+
+        <ImageButton
+            android:id="@+id/id_dish01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:scaleType="center"
+            android:src="@mipmap/dish01"
+            android:layout_margin="15dp"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:weightSum="1"
+        android:background="@mipmap/dish_bg">
+
+        <ImageButton
+            android:id="@+id/id_dish02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:scaleType="center"
+            android:src="@mipmap/dish02"
+            android:layout_margin="15dp"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:weightSum="1"
+        android:background="@mipmap/dish_bg">
+
+        <ImageButton
+            android:id="@+id/id_dish03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:scaleType="center"
+            android:src="@mipmap/dish03"
+            android:layout_margin="15dp"
+            android:layout_centerHorizontal="true"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:weightSum="1"
+        android:background="@mipmap/dish_bg">
+
+        <ImageButton
+            android:id="@+id/id_dish04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:scaleType="center"
+            android:src="@mipmap/dish01"
+            android:layout_margin="15dp"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+</LinearLayout>
