@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_titlebar"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/colorAccent">
+   <LinearLayout
+       android:id="@+id/id_titlelocation"
+       android:layout_height="fill_parent"
+       android:layout_width="80dp"
+       android:gravity="center"
+       android:orientation="vertical">
+
+      <ImageButton
+          android:id="@+id/id_location"
+          android:layout_width="25dp"
+          android:layout_height="25dp"
+          android:src="@drawable/location"
+          android:scaleType="fitXY"
+          android:clickable="false"
+          android:background="#00000000"/>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:textColor="#ffffff"
+          android:text="定位"/>
+   </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/id_titlequery"
+       android:layout_height="match_parent"
+       android:layout_width="0dp"
+       android:gravity="center"
+       android:orientation="vertical"
+       android:layout_weight="1">
+
+      <EditText
+          android:id="@+id/id_querycontent"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:hint="搜索商户或者商品名称 "
+          android:layout_gravity="center"
+          android:background="#ffffff"/>
+   </LinearLayout>
+   <LinearLayout
+       android:id="@+id/id_titlequerybutton"
+       android:layout_height="fill_parent"
+       android:layout_width="80dp"
+       android:gravity="center"
+       android:orientation="vertical">
+
+      <ImageButton
+          android:id="@+id/id_query"
+          android:layout_width="25dp"
+          android:layout_height="25dp"
+          android:src="@drawable/query"
+          android:scaleType="fitXY"
+          android:clickable="false"
+          android:background="#00000000"/>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:textColor="#ffffff"
+          android:text="查找"/>
+   </LinearLayout>
+
+
+
+
+</LinearLayout>
