@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/id_ld"
+        android:id="@+id/id_pr"
         android:layout_height="fill_parent"
         android:layout_width="0dp"
         android:gravity="center"
@@ -37,7 +37,7 @@
         android:layout_weight="1">
 
         <ImageButton
-            android:id="@+id/id_ld_img"
+            android:id="@+id/id_pr_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/newdian"
@@ -52,7 +52,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/id_nd"
+        android:id="@+id/id_na"
         android:layout_height="fill_parent"
         android:layout_width="0dp"
         android:gravity="center"
@@ -60,7 +60,7 @@
         android:layout_weight="1">
 
         <ImageButton
-            android:id="@+id/id_nd_img"
+            android:id="@+id/id_na_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/tuhao"

@@ -5,6 +5,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical" >
 
+  <include layout="@layout/titlebar"/>
   <include layout="@layout/banner"/>
   <include layout="@layout/content" />
   <include layout="@layout/list_item"/>

@@ -43,12 +43,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private List<View> mViews = new ArrayList<View>();
 
 	private LinearLayout mTableUploadDish;
-	private LinearLayout mTableLastestDish;
-	private LinearLayout mTableNearby;
+	private LinearLayout mTablePopularRestaurant;
+	private LinearLayout mTableNewActivity;
 
 	private ImageButton mUploadDishImg;
-	private ImageButton mLastestDishImg;
-	private ImageButton mNearbyImg;
+	private ImageButton mPopularRestaurantImg;
+	private ImageButton mNewActivityImg;
 	private List<ImageView> imageViews;// 滑动的图片集合
 
 	private List<View> dots; // 图片标题正文的那些点
@@ -110,8 +110,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	}
 	private void initEvent() {
 		mTableUploadDish.setOnClickListener(this);
-		mTableLastestDish.setOnClickListener(this);
-		mTableNearby.setOnClickListener(this);
+		mTablePopularRestaurant.setOnClickListener(this);
+		mTableNewActivity.setOnClickListener(this);
 
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -129,10 +129,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
 						mUploadDishImg.setImageResource(R.drawable.menu_icon_0_pressed);
 						break;
 					case 1:
-						mLastestDishImg.setImageResource(R.drawable.menu_icon_1_pressed);
+						mPopularRestaurantImg.setImageResource(R.drawable.menu_icon_1_pressed);
 						break;
 					case 2:
-						mNearbyImg.setImageResource(R.drawable.menu_icon_3_pressed);
+						mNewActivityImg.setImageResource(R.drawable.menu_icon_3_pressed);
 						break;
 
 				}
@@ -150,20 +150,20 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		mViewPager=(ViewPager) findViewById(R.id.id_viewpager);
 
 		mTableUploadDish=(LinearLayout)findViewById(R.id.id_ud);
-		mTableLastestDish=(LinearLayout)findViewById(R.id.id_ld);
-		mTableNearby=(LinearLayout)findViewById(R.id.id_nd);
+		mTablePopularRestaurant=(LinearLayout)findViewById(R.id.id_pr);
+		mTableNewActivity=(LinearLayout)findViewById(R.id.id_na);
 
 		mUploadDishImg=(ImageButton)findViewById(R.id.id_ud_img);
-		mLastestDishImg=(ImageButton)findViewById(R.id.id_ld_img);
-		mNearbyImg=(ImageButton)findViewById(R.id.id_nd_img);
+		mPopularRestaurantImg=(ImageButton)findViewById(R.id.id_pr_img);
+		mNewActivityImg=(ImageButton)findViewById(R.id.id_na_img);
 
 		LayoutInflater mInflater = LayoutInflater.from(this);
 		View ud = mInflater.inflate(R.layout.ud,null);
-		View ld = mInflater.inflate(R.layout.ld,null);
-		View nd = mInflater.inflate(R.layout.nd,null);
-		mViews.add(ld);
+		View pr = mInflater.inflate(R.layout.pr,null);
+		View na = mInflater.inflate(R.layout.na,null);
 		mViews.add(ud);
-		mViews.add(nd);
+		mViews.add(pr);
+		mViews.add(na);
 
 		mAdapter = new PagerAdapter() {
 			@Override
@@ -203,13 +203,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				mViewPager.setCurrentItem(0);
 				mUploadDishImg.setImageResource(R.drawable.menu_icon_0_pressed);
 				break;
-			case R.id.id_ld:
+			case R.id.id_pr:
 				mViewPager.setCurrentItem(1);
-				mLastestDishImg.setImageResource(R.drawable.menu_icon_1_pressed);
+				mPopularRestaurantImg.setImageResource(R.drawable.menu_icon_1_pressed);
 				break;
-			case R.id.id_nd:
+			case R.id.id_na:
 				mViewPager.setCurrentItem(2);
-				mNearbyImg.setImageResource(R.drawable.menu_icon_3_pressed);
+				mNewActivityImg.setImageResource(R.drawable.menu_icon_3_pressed);
 				break;
 
 			default:
@@ -220,8 +220,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 	private void resetImg(){
 		mUploadDishImg.setImageResource(R.drawable.menu_icon_0_normal);
-		mLastestDishImg.setImageResource(R.drawable.menu_icon_1_normal);
-		mNearbyImg.setImageResource(R.drawable.menu_icon_3_normal);
+		mPopularRestaurantImg.setImageResource(R.drawable.menu_icon_1_normal);
+		mNewActivityImg.setImageResource(R.drawable.menu_icon_3_normal);
 	}
 
 	private void initImageLoader() {
