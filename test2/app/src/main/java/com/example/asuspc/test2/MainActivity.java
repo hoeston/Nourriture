@@ -1,6 +1,7 @@
 package com.example.asuspc.test2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -37,18 +40,25 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	
 	public static String IMAGE_CACHE_PATH = "imageloader/Cache"; // 图片缓存路径
 
+	private PagerAdapter mPagerAdapter;// 初始化View适配器
+	// 四个Tab，每个Tab包含一个按钮
+	private LinearLayout mTabWeiXin;
+	private LinearLayout mTabAddress;
+	private LinearLayout mTabSetting;
+	// 四个按钮
+	private ImageButton mWeiXinImg;
+	private ImageButton mAddressImg;
+	private ImageButton mSettingImg;
+	private Button my_button = null;
+	private View tab01 = null;
+	private View tab02 = null;
+	private View tab03 = null;
+
 	private ViewPager adViewPager;
 	private ViewPager mViewPager;
 	private PagerAdapter mAdapter;
 	private List<View> mViews = new ArrayList<View>();
 
-	private LinearLayout mTableUploadDish;
-	private LinearLayout mTablePopularRestaurant;
-	private LinearLayout mTableNewActivity;
-
-	private ImageButton mUploadDishImg;
-	private ImageButton mPopularRestaurantImg;
-	private ImageButton mNewActivityImg;
 	private List<ImageView> imageViews;// 滑动的图片集合
 
 	private List<View> dots; // 图片标题正文的那些点
@@ -104,14 +114,54 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 		startAd();
 
+		initViewPage();
 		initView();
 		initEvent();
 
+		Toast.makeText(getApplicationContext(), "默认Toast样式",
+				Toast.LENGTH_SHORT).show();
+		my_button = (Button)tab03.findViewById(R.id.loginBtn);
+		my_button.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+				MainActivity.this.startActivity(intent);
+			}
+
+		});
+
+		ImageButton mNewActivityImg = (ImageButton)findViewById(R.id.id_na_img);
+		ImageButton mUpdateDishImg = (ImageButton)findViewById(R.id.id_ud_img);
+		ImageButton mPopularRestImg = (ImageButton)findViewById(R.id.id_pr_img);
+
+		mNewActivityImg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MainActivity.this, NearbyRest.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
+		mUpdateDishImg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MainActivity.this, UpdateDish.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
+		mPopularRestImg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MainActivity.this, PopularRest.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
+
 	}
 	private void initEvent() {
-		mTableUploadDish.setOnClickListener(this);
-		mTablePopularRestaurant.setOnClickListener(this);
-		mTableNewActivity.setOnClickListener(this);
+		mTabWeiXin.setOnClickListener(this);
+		mTabAddress.setOnClickListener(this);
+		mTabSetting.setOnClickListener(this);
 
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -126,13 +176,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				resetImg();
 				switch (currentItem){
 					case 0:
-						mUploadDishImg.setImageResource(R.drawable.menu_icon_0_pressed);
+						resetImg();
+						mWeiXinImg.setImageResource(R.mipmap.ic_l1);
 						break;
 					case 1:
-						mPopularRestaurantImg.setImageResource(R.drawable.menu_icon_1_pressed);
+						resetImg();
+						mAddressImg.setImageResource(R.mipmap.ic_l2);
 						break;
 					case 2:
-						mNewActivityImg.setImageResource(R.drawable.menu_icon_3_pressed);
+						resetImg();
+						mSettingImg.setImageResource(R.mipmap.ic_launcher);
+						break;
+
+					default:
 						break;
 
 				}
@@ -144,26 +200,59 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			}
 		});
 	}
+	/**
+	 * 初始化ViewPage
+	 */
+	private void initViewPage() {
+
+		// 初妈化四个布局
+		LayoutInflater mLayoutInflater = LayoutInflater.from(this);
+		tab01 = mLayoutInflater.inflate(R.layout.me, null);
+		tab02 = mLayoutInflater.inflate(R.layout.page2, null);
+		tab03 = mLayoutInflater.inflate(R.layout.page3, null);
+
+		mViews.add(tab01);
+		mViews.add(tab02);
+		mViews.add(tab03);
+
+		// 适配器初始化并设置
+		mPagerAdapter = new PagerAdapter() {
+
+			@Override
+			public void destroyItem(ViewGroup container, int position,
+									Object object) {
+				container.removeView(mViews.get(position));
+			}
+			@Override
+			public Object instantiateItem(ViewGroup container, int position) {
+				View view = mViews.get(position);
+				container.addView(view);
+				return view;
+			}
+			@Override
+			public boolean isViewFromObject(View arg0, Object arg1) {
+				return arg0 == arg1;
+			}
+			@Override
+			public int getCount() {
+				return mViews.size();
+			}
+		};
+		mViewPager=new ViewPager(MainActivity.this);
+		mViewPager.setAdapter(mPagerAdapter);
+	}
 
 
 	private void initView() {
 		mViewPager=(ViewPager) findViewById(R.id.id_viewpager);
 
-		mTableUploadDish=(LinearLayout)findViewById(R.id.id_ud);
-		mTablePopularRestaurant=(LinearLayout)findViewById(R.id.id_pr);
-		mTableNewActivity=(LinearLayout)findViewById(R.id.id_na);
+		mTabWeiXin = (LinearLayout) findViewById(R.id.id_tab_weixin);
+		mTabAddress = (LinearLayout) findViewById(R.id.id_tab_address);
+		mTabSetting = (LinearLayout) findViewById(R.id.id_tab_settings);
 
-		mUploadDishImg=(ImageButton)findViewById(R.id.id_ud_img);
-		mPopularRestaurantImg=(ImageButton)findViewById(R.id.id_pr_img);
-		mNewActivityImg=(ImageButton)findViewById(R.id.id_na_img);
-
-		LayoutInflater mInflater = LayoutInflater.from(this);
-		View ud = mInflater.inflate(R.layout.ud,null);
-		View pr = mInflater.inflate(R.layout.pr,null);
-		View na = mInflater.inflate(R.layout.na,null);
-		mViews.add(ud);
-		mViews.add(pr);
-		mViews.add(na);
+		mWeiXinImg = (ImageButton) findViewById(R.id.id_tab_weixin_img);
+		mAddressImg = (ImageButton) findViewById(R.id.id_tab_address_img);
+		mSettingImg = (ImageButton) findViewById(R.id.id_tab_settings_img);
 
 		mAdapter = new PagerAdapter() {
 			@Override
@@ -199,17 +288,21 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		resetImg();
 
 		switch (v.getId()){
-			case R.id.id_ud:
+
+			case R.id.id_tab_weixin:
 				mViewPager.setCurrentItem(0);
-				mUploadDishImg.setImageResource(R.drawable.menu_icon_0_pressed);
+				resetImg();
+				mWeiXinImg.setImageResource(R.mipmap.ic_l1);
 				break;
-			case R.id.id_pr:
+			case R.id.id_tab_address:
 				mViewPager.setCurrentItem(1);
-				mPopularRestaurantImg.setImageResource(R.drawable.menu_icon_1_pressed);
+				resetImg();
+				mAddressImg.setImageResource(R.mipmap.ic_l2);
 				break;
-			case R.id.id_na:
+			case R.id.id_tab_settings:
 				mViewPager.setCurrentItem(2);
-				mNewActivityImg.setImageResource(R.drawable.menu_icon_3_pressed);
+				resetImg();
+				mSettingImg.setImageResource(R.mipmap.ic_launcher);
 				break;
 
 			default:
@@ -219,9 +312,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	}
 
 	private void resetImg(){
-		mUploadDishImg.setImageResource(R.drawable.menu_icon_0_normal);
-		mPopularRestaurantImg.setImageResource(R.drawable.menu_icon_1_normal);
-		mNewActivityImg.setImageResource(R.drawable.menu_icon_3_normal);
+		mWeiXinImg.setImageResource(R.mipmap.ic_l1);
+		mAddressImg.setImageResource(R.mipmap.ic_l2);
+		mSettingImg.setImageResource(R.mipmap.ic_launcher);
 	}
 
 	private void initImageLoader() {

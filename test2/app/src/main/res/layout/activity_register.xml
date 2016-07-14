@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="@color/near_white"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40.0dip">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:text="手机号"
+            style="@style/register_login_text" />
+        <EditText
+            android:id="@+id/phoneEt"
+            android:hint="11位手机号"
+            android:maxLength="11"
+            android:inputType="phone"
+            style="@style/long_white_bg_edittext" />
+    </LinearLayout>
+    <View android:background="@color/light_gray"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/line_height" />
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/userName"
+            android:text="用户名"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            style="@style/register_login_text" />
+        <EditText
+            android:id="@+id/userNameEt"
+            android:layout_width="160.0dip"
+            android:hint="请输入用户名"
+            android:maxLines="1"
+            android:maxLength="20"
+            android:layout_toRightOf="@id/userName"
+            android:layout_centerVertical="true"
+            style="@style/long_white_bg_edittext" />
+        <!--<TextView-->
+            <!--android:textSize="13.0sp"-->
+            <!--android:textColor="@drawable/color_text_btn_primary"-->
+            <!--android:id="@+id/getVeriCodeBtn"-->
+            <!--android:paddingLeft="10.0dip"-->
+            <!--android:paddingRight="10.0dip"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="获取验证码"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true" />-->
+        <TextView
+            android:textSize="13.0sp"
+            android:textColor="@color/gray"
+            android:id="@+id/waitTv"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <View
+        android:background="@color/light_gray"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/line_height" />
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:text="密码"
+            style="@style/register_login_text" />
+        <EditText
+            android:id="@id/pwdEt"
+            android:hint="请输入6~16位密码"
+            android:maxLength="16"
+            android:inputType="textPassword"
+            style="@style/long_white_bg_edittext" />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:text="重复密码"
+            style="@style/register_login_text" />
+        <EditText
+            android:id="@+id/rpwdEt"
+            android:hint="请输入6~16位密码"
+            android:maxLength="16"
+            android:inputType="textPassword"
+            style="@style/long_white_bg_edittext" />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25.0dip">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/agreeTermsParent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@id/checkbox"
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:src="@drawable/ic_select_on" />
+            <TextView
+                android:textSize="13.0sp"
+                android:textColor="@drawable/color_text_btn_primary_desc_text"
+                android:id="@+id/agreeTv"
+                android:paddingLeft="10.0dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已阅读并同意" />
+        </LinearLayout>
+        <TextView
+            android:textSize="13.0sp"
+            android:textColor="@drawable/color_text_btn_primary"
+            android:id="@+id/termsForUsageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.0dip"
+            android:text="《用户使用条款》" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/registerBtn"
+        android:text="注册"
+        style="@style/long_primary_btn" />
+</LinearLayout>

@@ -15,6 +15,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.asuspc.test2.LoginActivity"
+            android:label="Login Activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="com.example.asuspc.test2.RegisterActivity"
+            android:label="BasicActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.asuspc.test2.UploadMenuActivity"/>
+        <activity android:name="com.example.asuspc.test2.SelectActivity"/>
+        <activity android:name=".NearbyRest"/>
+        <activity android:name=".PopularRest"/>
+        <activity android:name=".UpdateDish"/>
     </application>
 
 </manifest>
