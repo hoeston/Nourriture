@@ -8,9 +8,10 @@
   <include layout="@layout/titlebar"/>
   <include layout="@layout/banner"/>
   <include layout="@layout/content" />
-  <include layout="@layout/list_item"/>
-
-
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listview"/>
   <android.support.v4.view.ViewPager
       android:id="@+id/id_viewpager"
       android:layout_width="fill_parent"
@@ -18,5 +19,17 @@
       android:layout_weight="1">
   </android.support.v4.view.ViewPager>
   <include layout="@layout/bottombar"/>
+  <Button
+      android:id="@+id/top_btn"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:visibility="gone"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:layout_marginBottom="6dp"
+      android:layout_marginRight="6dp"
+      android:background="@mipmap/ic_logo"
+      android:gravity="center"
+      android:text="顶" />
 
 </LinearLayout>

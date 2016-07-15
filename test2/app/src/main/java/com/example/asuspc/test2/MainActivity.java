@@ -1,6 +1,7 @@
 package com.example.asuspc.test2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,14 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.asuspc.test2.util.ScreenUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -75,6 +80,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private View dot2;
 	private View dot3;
 	private View dot4;
+	//定义listview
+	private ListView listView;// List数据列表
+	private Button toTopBtn;// 返回顶部的按钮
+	private BaseAdapter adapter;
+	private boolean scrollFlag = false;// 标记是否滑动
+	private int lastVisibleItemPosition = 0;// 标记上次滑动位置
 
 	private ScheduledExecutorService scheduledExecutorService;
 
@@ -254,6 +265,58 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		mAddressImg = (ImageButton) findViewById(R.id.id_tab_address_img);
 		mSettingImg = (ImageButton) findViewById(R.id.id_tab_settings_img);
 
+		listView = (ListView)findViewById(R.id.listview);
+		toTopBtn = (Button) findViewById(R.id.top_btn);
+		adapter = new Adapter(this, getTitleDatas());
+		listView.setAdapter(adapter);
+
+		toTopBtn.setOnClickListener(this);
+		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+				switch (scrollState) {
+					// 当不滚动时
+					case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:// 是当屏幕停止滚动时
+						scrollFlag = false;
+						// 判断滚动到底部
+						if (listView.getLastVisiblePosition() == (listView
+								.getCount() - 1)) {
+							toTopBtn.setVisibility(View.VISIBLE);
+						}
+						// 判断滚动到顶部
+						if (listView.getFirstVisiblePosition() == 0) {
+							toTopBtn.setVisibility(View.GONE);
+						}
+
+						break;
+					case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:// 滚动时
+						scrollFlag = true;
+						break;
+					case AbsListView.OnScrollListener.SCROLL_STATE_FLING:// 是当用户由于之前划动屏幕并抬起手指，屏幕产生惯性滑动时
+						scrollFlag = false;
+						break;
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+				if (scrollFlag
+						&& ScreenUtil.getScreenViewBottomHeight(listView) >= ScreenUtil
+						.getScreenHeight(MainActivity.this)) {
+					if (firstVisibleItem > lastVisibleItemPosition) {// 上滑
+						toTopBtn.setVisibility(View.VISIBLE);
+					} else if (firstVisibleItem < lastVisibleItemPosition) {// 下滑
+						toTopBtn.setVisibility(View.GONE);
+					} else {
+						return;
+					}
+					lastVisibleItemPosition = firstVisibleItem;
+				}
+			}
+		});
+
 		mAdapter = new PagerAdapter() {
 			@Override
 			public Object instantiateItem(ViewGroup container, int position) {
@@ -303,6 +366,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 				mViewPager.setCurrentItem(2);
 				resetImg();
 				mSettingImg.setImageResource(R.mipmap.ic_launcher);
+				break;
+			case R.id.top_btn:// 点击按钮返回到ListView的第一项
+				setListViewPos(0);
 				break;
 
 			default:
@@ -561,5 +627,97 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 		return adList;
 	}
+
+	private class Adapter extends BaseAdapter{
+		private List<String> mTitleArray;// 标题数组
+		private LayoutInflater inflater;
+
+		/**
+		 * 构造方法
+		 *
+		 * @param context
+		 *            // 上下文对象
+		 * @param titleArray
+		 *            // 标题数组
+		 */
+		public Adapter(Context context, List<String> titleArray) {
+			this.mTitleArray = titleArray;
+			inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		}
+
+		/**
+		 * 获取Item总数
+		 */
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			if (mTitleArray != null) {
+				return mTitleArray.size();
+			} else {
+				return 0;
+			}
+		}
+
+		/**
+		 * 获取一个Item对象
+		 */
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			if (mTitleArray != null) {
+				return mTitleArray.get(position);
+			} else {
+				return null;
+			}
+		}
+
+		/**
+		 * 获取指定item的ID
+		 */
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			ViewHolder holder = null;
+			if (convertView == null) {
+				holder = new ViewHolder();
+				convertView = inflater.inflate(R.layout.list_item, null);
+				holder.mTitleTv = (TextView) convertView
+						.findViewById(R.id.dishName);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+
+			holder.mTitleTv.setText(mTitleArray.get(position));
+			return convertView;
+		}
+
+		private class ViewHolder {
+			private TextView mTitleTv;
+		}
+
+	}
+	private List<String> getTitleDatas() {
+		List<String> titleArray = new ArrayList<String>();
+		for (int i = 0; i < 30; i++) {
+			titleArray.add("这是第" + i + "个item");
+		}
+		return titleArray;
+	}
+	private void setListViewPos(int pos) {
+		if (android.os.Build.VERSION.SDK_INT >= 8) {
+			listView.smoothScrollToPosition(pos);
+		} else {
+			listView.setSelection(pos);
+		}
+	}
+
 
 }

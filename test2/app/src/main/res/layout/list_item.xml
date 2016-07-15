@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="5dip"
+    android:descendantFocusability="blocksDescendants">
+
     <ImageView
-        android:id="@+id/imgv_appicon"
+        android:id="@+id/dishImg"
         android:layout_width="100dp"
+        android:background="#00000000"
         android:src="@mipmap/dish01"
+        android:focusable="false"
         android:layout_height="100dp"/>
 
-    <TextView
-        android:id="@+id/tv_appsize"
-        style="@style/textview16sp"
-        android:text="4星"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tv_appsize"-->
+        <!--style="@style/textview16sp"-->
+        <!--android:text="4星"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"/>-->
 
     <TextView
-        android:id="@+id/tv_appname"
+        android:id="@+id/dishName"
         android:text="油闷大虾"
         style="@style/textview16sp"
-        android:layout_toRightOf="@+id/imgv_appicon"
+        android:layout_toRightOf="@+id/dishImg"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="18dp"/>
 
@@ -29,15 +34,15 @@
         style="@style/textview14sp"
         android:text="人气: 5243阅览量"
         android:layout_marginTop="3dp"
-        android:layout_alignLeft="@+id/tv_appname"
-        android:layout_toRightOf="@+id/imgv_appicon"
-        android:layout_below="@+id/tv_appname"/>
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
     <TextView
         android:id="@+id/tv_money"
         style="@style/textview14sp"
         android:text="制作平均26分钟"
-        android:layout_below="@+id/tv_appisroom"
+        android:layout_below="@+id/dishName"
         android:layout_marginTop="3dp"
-        android:layout_toRightOf="@+id/imgv_appicon"
-        android:layout_alignLeft="@+id/tv_appname"/>
+        android:layout_toRightOf="@+id/dishImg"
+        android:layout_alignLeft="@+id/dishName"/>
 </RelativeLayout>
