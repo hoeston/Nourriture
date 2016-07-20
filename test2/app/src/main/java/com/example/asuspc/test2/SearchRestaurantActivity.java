@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.asuspc.test2.modal.Dish;
+import com.example.asuspc.test2.modal.RestaurantDish;
 import com.example.asuspc.test2.util.HttpUtil;
 
 import org.apache.http.NameValuePair;
@@ -20,7 +20,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectActivity extends AppCompatActivity {
+
+public class SearchRestaurantActivity extends AppCompatActivity {
 
     private ImageButton buttonSelect = null;
     private static ProgressDialog selectProgress;
@@ -32,7 +33,7 @@ public class SelectActivity extends AppCompatActivity {
 
         int returnCode = json.getInteger("return_code");
         String message = json.getString("message");
-        List<Dish> dishes = JSON.parseArray(json.getJSONArray("data").toJSONString(), Dish.class);
+        List<RestaurantDish> dishes = JSON.parseArray(json.getJSONArray("data").toJSONString(), RestaurantDish.class);
         switch (returnCode) {
             case 0:
                 onSelectSuccess(dishes);
@@ -62,14 +63,14 @@ public class SelectActivity extends AppCompatActivity {
 
         setContentView(R.layout.titlebar);
 
-        buttonSelect = (ImageButton) findViewById(R.id.id_query);
+        buttonSelect = (ImageButton)findViewById(R.id.id_query);
 
         //final EditText dishEditText = (EditText) findViewById(R.id.account);
 
         buttonSelect.setOnClickListener(new View.OnClickListener() {
                                             public void onClick(View v) {
                                                 //String dish = dishEditText.getText().toString();
-                                                String dish = "1";
+                                                String dish = "鱼";
                                                 select(dish);
 
 
@@ -78,15 +79,14 @@ public class SelectActivity extends AppCompatActivity {
         );
     }
 
-    private void onSelectSuccess(List<Dish> data) {
-        //Toast.makeText(this, data.size(), Toast.LENGTH_LONG).show();
-        Toast.makeText(this, data.get(0).getName(), Toast.LENGTH_LONG).show();
-        Toast.makeText(this, "xixi", Toast.LENGTH_LONG).show();
+    private void onSelectSuccess(List<RestaurantDish> data) {
+        Toast.makeText(this, " ", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "dxx", Toast.LENGTH_LONG).show();
     }
 
 
     private void select(final String dishname) {
-        selectProgress = ProgressDialog.show(this, null, "查找中...");
+        selectProgress = ProgressDialog.show(this, null, "加载中...");
 
         new Thread(new Runnable() {
             @Override
@@ -97,8 +97,8 @@ public class SelectActivity extends AppCompatActivity {
     }
 
 
-    private static com.alibaba.fastjson.JSONObject connectServer(final String name) {
-        String serverUrl = "search_dish";
+    private static JSONObject connectServer(final String name) {
+        String serverUrl = "search_rest_dish";
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("name", name));
         return HttpUtil.request2(serverUrl, params);

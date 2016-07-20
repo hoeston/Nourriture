@@ -10,14 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.example.asuspc.test2.modal.Dish;
+import com.example.asuspc.test2.modal.User;
+import com.example.asuspc.test2.state.AppState;
 import com.example.asuspc.test2.util.HttpUtil;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +43,17 @@ public class LoginActivity extends AppCompatActivity {
 		 * */
         int returnCode = -1;
         String message = "服务器异常";
-        try {
-            returnCode = json.getInt("return_code");
-            message = json.getString("message");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        returnCode = json.getInteger("return_code");
+        message = json.getString("message");
+
         switch (returnCode) {
             case 0:
-                onLoginSuccess();
+                String userName = json.getJSONObject("data").getString("userName");
+                int userId = json.getJSONObject("data").getInteger("userId");
+                List<Dish> dishes = JSON.parseArray(json.getJSONObject("data").getJSONArray("dishes").toJSONString(),
+                        Dish.class);
+                onLoginSuccess(userName,userId,dishes);
                 break;
             default:
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
@@ -60,20 +63,6 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (mHandler == null) {
-            mHandler = new Handler(getApplicationContext().getMainLooper()) {
-                public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case MSG_LOGIN_RESULT:
-                            loginProgress.dismiss();
-                            JSONObject json = (JSONObject) msg.obj;
-                            handleLoginResult(json);
-                            break;
-                    }
-                }
-            };
-        }
 
         setContentView(R.layout.activity_login);
 
@@ -105,22 +94,14 @@ public class LoginActivity extends AppCompatActivity {
                                         }
         );
 
+        mHandler = new MyHandler(this);
+
     }
 
-    private void onLoginSuccess() {
+    private void onLoginSuccess(String userName, int userId,List<Dish> data) {
         Toast.makeText(this, "登录成功", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        /*try {
-            intent.putExtra("username", json.getString("username"));
-            intent.putExtra("gender", json.getString("gender"));
-            intent.putExtra("age", json.getInt("age"));
-            intent.putExtra("phone", json.getString("phone"));
-            intent.putExtra("email", json.getString("email"));
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
-        startActivity(intent);
+        User user = new User(userId,userName,data);
+        AppState.getInstance().setUser(user);
         finish();
     }
 
@@ -142,8 +123,27 @@ public class LoginActivity extends AppCompatActivity {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", username));
         params.add(new BasicNameValuePair("password", password));
-        return HttpUtil.request(serverUrl, params);
+        return HttpUtil.request2(serverUrl, params);
     }
 
+    private static class MyHandler extends Handler {
+        private WeakReference<LoginActivity> mOuter;
+
+        MyHandler(LoginActivity activity) {
+            mOuter = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            LoginActivity outer = mOuter.get();
+            switch (msg.what) {
+                case MSG_LOGIN_RESULT:
+                    loginProgress.dismiss();
+                    JSONObject json = (JSONObject) msg.obj;
+                    outer.handleLoginResult(json);
+                    break;
+            }
+        }
+    }
 
 }

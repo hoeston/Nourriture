@@ -32,4 +32,7 @@ dependencies {
     compile files('libs/httpcore-4.2.4.jar')
     compile files('libs/httpmime-4.2.5.jar')
     compile files('libs/junit-4.3.jar')
+    compile files('libs/fastjson-1.2.9.jar')
+    compile files('libs/baidumapapi_v3_5_0.jar')
+    compile files('libs/locSDK_6.23.jar')
 }

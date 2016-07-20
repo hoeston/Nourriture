@@ -3,7 +3,8 @@
     android:id="@+id/rl_titlebar"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:background="@color/colorAccent">
+    android:background="@color/colorAccent"
+    android:orientation="horizontal">
    <LinearLayout
        android:id="@+id/id_titlelocation"
        android:layout_height="fill_parent"
@@ -43,6 +44,16 @@
           android:layout_gravity="center"
           android:background="#ffffff"/>
    </LinearLayout>
+   <ListView
+       android:visibility="gone"
+       android:id="@+id/search_lv_tips"
+       android:background="@drawable/lv_search_tips_bg"
+       android:layout_marginLeft="20dp"
+       android:layout_marginRight="20dp"
+       android:layout_marginBottom="10dp"
+       android:layout_width="match_parent"
+       android:layout_height="200dp">
+   </ListView>
    <LinearLayout
        android:id="@+id/id_titlequerybutton"
        android:layout_height="fill_parent"
@@ -65,8 +76,4 @@
           android:textColor="#ffffff"
           android:text="查找"/>
    </LinearLayout>
-
-
-
-
 </LinearLayout>

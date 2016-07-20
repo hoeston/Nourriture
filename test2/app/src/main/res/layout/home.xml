@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:id="@+id/homell">
+
+    <include layout="@layout/titlebar"/>
+
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp" >
-
+        android:layout_height="150dp">
         <android.support.v4.view.ViewPager
-            android:id="@+id/vp"
+            android:id="@+id/viewp"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
@@ -20,18 +24,6 @@
             android:background="@mipmap/shadow_article" >
 
             <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/author_layout"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:maxLines="2"
-                android:text="活动时间"
-                android:textColor="#ffffff"
-                android:textSize="18sp" />
-
-            <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +31,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_toRightOf="@+id/tv_date"
                 android:maxLines="2"
                 android:text="活动名称"
                 android:textColor="#ffffff"
@@ -63,20 +54,11 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tv_topic_from"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_pre"
-                    android:text="御膳房"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-
-                <TextView
                     android:id="@+id/tv_topic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/tv_topic_from"
+                    android:layout_toRightOf="@+id/tv_pre"
                     android:text="“活动大致内容”"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
@@ -99,17 +81,17 @@
 
             <View
                 android:id="@+id/v_dot1"
-                style="@style/dot_style" 
+                style="@style/dot_style"
                 android:visibility="invisible"/>
 
             <View
                 android:id="@+id/v_dot2"
-                style="@style/dot_style" 
+                style="@style/dot_style"
                 android:visibility="invisible"/>
 
             <View
                 android:id="@+id/v_dot3"
-                style="@style/dot_style" 
+                style="@style/dot_style"
                 android:visibility="invisible"/>
 
             <View
@@ -118,5 +100,47 @@
                 android:visibility="invisible" />
         </LinearLayout>
     </FrameLayout>
+
+    <LinearLayout android:orientation="horizontal"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+
+        <LinearLayout
+            android:id="@+id/id_ud"
+            android:layout_height="fill_parent"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/id_ud_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:src="@mipmap/eat"
+                android:background="#00000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="上传菜谱"/>
+        </LinearLayout>
+    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+    </android.support.v4.view.ViewPager>
+
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/listview"
+        android:visibility="gone"/>
+
 
 </LinearLayout>
